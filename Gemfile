@@ -33,12 +33,12 @@ group :development, :test do
 
   gem 'minitest', '~> 5.14'
   gem 'minitest-rails', '~> 6.0'
-  gem 'guard', '~> 2.16'
-  gem 'guard-minitest', '~> 2.4'
 end
 
 group :development do
   gem 'listen', '~> 3.2'
+  gem 'guard', '~> 2.16', require: false
+  gem 'guard-minitest', '~> 2.4', require: false
 end
 
 group :test do
