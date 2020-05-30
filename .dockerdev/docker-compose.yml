@@ -7,7 +7,7 @@ x-app: &app
     args:
       RUBY_VERSION: '2.7.1'
       BUNDLER_VERSION: '2.1.4'
-      PG_MAJOR: '12'
+      # PG_MAJOR: '12' # FIXME: commented for now while we are not using any database
   environment: &env
     NODE_ENV: development
     RAILS_ENV: ${RAILS_ENV:-development}
@@ -23,19 +23,20 @@ x-backend: &backend
     - ..:/app:cached
     - rails_cache:/app/tmp/cache
     - bundle:/usr/local/bundle
-    - .psqlrc:/root/.psqlrc:ro
     - .bashrc:/root/.bashrc:ro
+    # - .psqlrc:/root/.psqlrc:ro # FIXME: commented for now while we are not using any database
   environment:
     <<: *env
-    DATABASE_URL: postgres://postgres:postgres@postgres:5432
+    # DATABASE_URL: postgres://postgres:postgres@postgres:5432 # FIXME: commented for now while we are not using any database
+    # PSQL_HISTFILE: /app/log/.psql_history # FIXME: commented for now while we are not using any database
     BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
     WEB_CONCURRENCY: 1
     HISTFILE: /app/log/.bash_history
-    PSQL_HISTFILE: /app/log/.psql_history
     EDITOR: vi
-  depends_on:
-    postgres:
-      condition: service_healthy
+  # FIXME: commented for now while we are not using any database
+  # depends_on:
+  #   postgres:
+  #     condition: service_healthy
 
 services:
   runner:
@@ -50,22 +51,23 @@ services:
     ports:
       - '3000:3000'
 
-  postgres:
-    image: postgres:12.3
-    volumes:
-      - .psqlrc:/root/.psqlrc:ro
-      - postgres:/var/lib/postgresql/data
-      - ./log:/root/log:cached
-    environment:
-      PSQL_HISTFILE: /root/log/.psql_history
-      POSTGRES_HOST_AUTH_METHOD: trust
-    ports:
-      - 5432
-    healthcheck:
-      test: pg_isready -U postgres -h 127.0.0.1
-      interval: 5s
+  # FIXME: commented for now while we are not using any database
+  # postgres:
+  #   image: postgres:12.3
+  #   volumes:
+  #     - .psqlrc:/root/.psqlrc:ro
+  #     - postgres:/var/lib/postgresql/data
+  #     - ./log:/root/log:cached
+  #   environment:
+  #     PSQL_HISTFILE: /root/log/.psql_history
+  #     POSTGRES_HOST_AUTH_METHOD: trust
+  #   ports:
+  #     - 5432
+  #   healthcheck:
+  #     test: pg_isready -U postgres -h 127.0.0.1
+  #     interval: 5s
 
 volumes:
-  postgres:
+  # postgres: # FIXME: commented for now while we are not using any database
   bundle:
   rails_cache:

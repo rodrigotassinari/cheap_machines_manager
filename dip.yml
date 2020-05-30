@@ -64,13 +64,15 @@ interaction:
     command: bundle exec rubocop
     compose_run_options: [no-deps]
 
-  psql:
-    description: Run psql console
-    service: postgres
-    command: psql -h postgres -U postgres -d cheap_machines_manager_development
+  # FIXME: commented for now while we are not using any database
+  # psql:
+  #   description: Run psql console
+  #   service: postgres
+  #   command: psql -h postgres -U postgres -d cheap_machines_manager_development
 
 provision:
   - dip compose down --volumes
-  - dip compose up -d postgres
+  # - dip compose up -d postgres # FIXME: commented for now while we are not using any database
   - dip bundle install
-  - dip rails db:setup
+  - dip rails log:clear tmp:clear
+  # - dip rails db:setup # FIXME: commented for now while we are not using any database
