@@ -30,10 +30,24 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  gem 'minitest', '~> 5.14'
+  gem 'minitest-rails', '~> 6.0'
+  gem 'guard', '~> 2.16'
+  gem 'guard-minitest', '~> 2.4'
 end
 
 group :development do
   gem 'listen', '~> 3.2'
+end
+
+group :test do
+  gem 'mocha', '~> 1.11'
+  gem 'simplecov', '~> 0.18', require: false
+  gem 'timecop', '~> 0.9'
+  gem 'webmock', '~> 3.8'
+  gem 'vcr', '~> 5.1'
+  gem 'minitest-vcr', '~> 1.4'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
