@@ -11,6 +11,8 @@ x-app: &app
   environment: &env
     NODE_ENV: development
     RAILS_ENV: ${RAILS_ENV:-development}
+  env_file:
+    - ../.env
   image: cheap_machines-manager-dev:1.0.0
   tmpfs:
     - /tmp
@@ -30,7 +32,7 @@ x-backend: &backend
     # DATABASE_URL: postgres://postgres:postgres@postgres:5432 # FIXME: commented for now while we are not using any database
     # PSQL_HISTFILE: /app/log/.psql_history # FIXME: commented for now while we are not using any database
     BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
-    WEB_CONCURRENCY: 1
+    RAILS_MAX_THREADS: 1
     HISTFILE: /app/log/.bash_history
     EDITOR: vi
   # FIXME: commented for now while we are not using any database

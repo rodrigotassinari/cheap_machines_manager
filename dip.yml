@@ -51,11 +51,13 @@ interaction:
     service: runner
     environment:
       RAILS_ENV: test
-    command: bundle exec rake test
+    command: bundle exec rails test
 
   guard:
     description: Run Guard
     service: runner
+    environment:
+      RAILS_ENV: test
     command: bundle exec guard
 
   rubocop:
