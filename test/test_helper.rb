@@ -39,4 +39,22 @@ class ActiveSupport::TestCase
   # fixtures :all # FIXME: `<class:TestCase>': undefined method `fixtures' for ActiveSupport::TestCase:Class (NoMethodError)
 
   # Add more helper methods to be used by all tests here...
+  def self.it_requires_authentication(&block)
+    it "requires token authentication" do
+      instance_exec(&block)
+      _(response.code).must_equal('401')
+      _(response.headers['WWW-Authenticate']).must_equal('Token realm="CheapMachinesManager"')
+      _(response.body).must_equal("HTTP Token: Access denied.\n") # TODO: return JSON
+    end
+  end
+
+  def self.it_requires_valid_authentication(&block)
+    it "requires valid token authentication" do
+      # authorization = ActionController::HttpAuthentication::Token.encode_credentials('wrong token')
+      instance_exec(&block)
+      _(response.code).must_equal('401')
+      _(response.headers['WWW-Authenticate']).must_equal('Token realm="CheapMachinesManager"')
+      _(response.body).must_equal("HTTP Token: Access denied.\n") # TODO: return JSON
+    end
+  end
 end
